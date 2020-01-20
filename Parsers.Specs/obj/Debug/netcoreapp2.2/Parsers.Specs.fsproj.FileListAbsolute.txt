@@ -1,0 +1,13 @@
+C:\Users\ntreu\source\repos\ParsersExample\Parsers.Specs\bin\Debug\netcoreapp2.2\Parsers.Specs.deps.json
+C:\Users\ntreu\source\repos\ParsersExample\Parsers.Specs\bin\Debug\netcoreapp2.2\Parsers.Specs.runtimeconfig.json
+C:\Users\ntreu\source\repos\ParsersExample\Parsers.Specs\bin\Debug\netcoreapp2.2\Parsers.Specs.runtimeconfig.dev.json
+C:\Users\ntreu\source\repos\ParsersExample\Parsers.Specs\bin\Debug\netcoreapp2.2\Parsers.Specs.dll
+C:\Users\ntreu\source\repos\ParsersExample\Parsers.Specs\obj\Debug\netcoreapp2.2\Parsers.Specs.AssemblyInfoInputs.cache
+C:\Users\ntreu\source\repos\ParsersExample\Parsers.Specs\obj\Debug\netcoreapp2.2\Parsers.Specs.AssemblyInfo.fs
+C:\Users\ntreu\source\repos\ParsersExample\Parsers.Specs\bin\Debug\netcoreapp2.2\Parsers.Specs.pdb
+C:\Users\ntreu\source\repos\ParsersExample\Parsers.Specs\bin\Debug\netcoreapp2.2\Parsers.dll
+C:\Users\ntreu\source\repos\ParsersExample\Parsers.Specs\bin\Debug\netcoreapp2.2\Parsers.pdb
+C:\Users\ntreu\source\repos\ParsersExample\Parsers.Specs\obj\Debug\netcoreapp2.2\Parsers.Specs.fsprojAssemblyReference.cache
+C:\Users\ntreu\source\repos\ParsersExample\Parsers.Specs\obj\Debug\netcoreapp2.2\Parsers.Specs.fsproj.CopyComplete
+C:\Users\ntreu\source\repos\ParsersExample\Parsers.Specs\obj\Debug\netcoreapp2.2\Parsers.Specs.dll
+C:\Users\ntreu\source\repos\ParsersExample\Parsers.Specs\obj\Debug\netcoreapp2.2\Parsers.Specs.pdb
