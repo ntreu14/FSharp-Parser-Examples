@@ -7,7 +7,7 @@ module SimpleParsers =
 
   let parseFloat = pfloat
 
-  let parseFloatBetweenBrackets : Parser<float, unit>= 
+  let parseFloatBetweenBrackets : Parser<float, unit> = 
     pchar '[' >>. pfloat .>> pchar ']'
   
   let parseFooOrBar : Parser<string, unit> =
