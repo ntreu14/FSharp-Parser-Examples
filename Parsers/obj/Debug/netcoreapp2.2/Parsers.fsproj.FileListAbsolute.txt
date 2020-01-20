@@ -1,8 +1,0 @@
-C:\Users\ntreu\source\repos\ParsersExample\Parsers\bin\Debug\netcoreapp2.2\Parsers.deps.json
-C:\Users\ntreu\source\repos\ParsersExample\Parsers\bin\Debug\netcoreapp2.2\Parsers.dll
-C:\Users\ntreu\source\repos\ParsersExample\Parsers\obj\Debug\netcoreapp2.2\Parsers.fsprojAssemblyReference.cache
-C:\Users\ntreu\source\repos\ParsersExample\Parsers\obj\Debug\netcoreapp2.2\Parsers.AssemblyInfoInputs.cache
-C:\Users\ntreu\source\repos\ParsersExample\Parsers\obj\Debug\netcoreapp2.2\Parsers.AssemblyInfo.fs
-C:\Users\ntreu\source\repos\ParsersExample\Parsers\bin\Debug\netcoreapp2.2\Parsers.pdb
-C:\Users\ntreu\source\repos\ParsersExample\Parsers\obj\Debug\netcoreapp2.2\Parsers.dll
-C:\Users\ntreu\source\repos\ParsersExample\Parsers\obj\Debug\netcoreapp2.2\Parsers.pdb
