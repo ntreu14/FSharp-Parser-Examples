@@ -43,17 +43,20 @@ module PhoneNumberParsers =
   let dashOrWhiteSpace =
     optional (skipChar '-' <|> spaces1)
 
-  let parsePhoneNumber numCountryCodeDigits = 
-    parseCountryCode numCountryCodeDigits >>= fun perhapsContryCode ->
-    dashOrWhiteSpace >>= fun () ->
-    parseAreaCode >>= fun areaCode ->
-    dashOrWhiteSpace >>= fun () ->
-    parsePrefix >>= fun prefix ->
-    dashOrWhiteSpace >>= fun () ->
-    parseLineNumber |>> fun lineNumber ->
-      {
-        CountryCode=perhapsContryCode
+  
+  let parsePhoneNumber numCountryCodeDigits = parse {
+    let! perhapsCountryCode = parseCountryCode numCountryCodeDigits 
+    let! _ = dashOrWhiteSpace
+    let! areaCode = parseAreaCode
+    let! _ = dashOrWhiteSpace
+    let! prefix = parsePrefix
+    let! _ = dashOrWhiteSpace
+    let! lineNumber = parseLineNumber
+    
+    return  {
+        CountryCode=perhapsCountryCode
         AreaCode=areaCode
         Prefix=prefix
         LineNumber=lineNumber
       }
+  }
