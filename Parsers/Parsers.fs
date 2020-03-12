@@ -13,24 +13,47 @@ module SimpleParsers =
   let parseFooOrBar : Parser<string, unit> =
     pstring "foo" <|> pstring "bar"
 
+  let parseDigit = digit
+
 module PhoneNumberParsers =
 
-  type PhoneNumber = 
-    {
-      CountryCode: int option
-      AreaCode: int
-      Prefix: int
-      LineNumber: int
-    }
+  type PhoneNumber = {
+    CountryCode: int option
+    AreaCode: int
+    Prefix: int
+    LineNumber: int
+  }
 
-  let private nDigits n = 
-    parray n digit |>> (fun c -> String.Join("", c))
+  let nDigits n = 
+    anyOf "1234567890" |> parray n |>> String.Concat
 
-  let countryCodePattern : Parser<unit, unit> =
-    optional (pchar '+' >>. puint16)
+  let parseDigitsAsInt n = nDigits n |>> int
+
+  let parseCountryCode numCountryCodeDigits : Parser<int option, string> =
+    ((optional <| pchar '+') >>. parseDigitsAsInt numCountryCodeDigits) |> opt
  
-  let parensPattern : Parser<string, unit> =
-    pchar '(' >>. nDigits 3 .>> pchar ')'
-    
-  let parsePhoneNumber (phoneNumber: string) = ()
-    
+  let parseAreaCode: Parser<int, string> =      
+    pchar '('
+      >>. parseDigitsAsInt 3
+      .>> pchar ')'
+
+  let parsePrefix = parseDigitsAsInt 3
+  let parseLineNumber = parseDigitsAsInt 4
+
+  let dashOrWhiteSpace =
+    optional (skipChar '-' <|> spaces1)
+
+  let parsePhoneNumber numCountryCodeDigits = 
+    parseCountryCode numCountryCodeDigits >>= fun perhapsContryCode ->
+    dashOrWhiteSpace >>= fun () ->
+    parseAreaCode >>= fun areaCode ->
+    dashOrWhiteSpace >>= fun () ->
+    parsePrefix >>= fun prefix ->
+    dashOrWhiteSpace >>= fun () ->
+    parseLineNumber |>> fun lineNumber ->
+      {
+        CountryCode=perhapsContryCode
+        AreaCode=areaCode
+        Prefix=prefix
+        LineNumber=lineNumber
+      }

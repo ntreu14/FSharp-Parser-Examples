@@ -12,7 +12,7 @@ let isError parserResult =
 
 let equalsExpectedResult expected = function
   | Success (result, _, _) -> expected = result
-  | _ -> false
+  | _                      -> false
 
 let always a _ = a
 
@@ -59,6 +59,20 @@ let tests =
           shouldBeAllErrors
           "returns Errors"
 
+      testCase "parsing a string that is a single digit" <| fun _ ->
+        let digit = "9"
+
+        Expect.isTrue
+          (isSuccessful <| run parseDigit digit)
+          "should return successfully"
+
+      testCase "parsing a stiring that is a char and is not a digit" <| fun _ ->
+        let invalidDigit = "s"
+        
+        Expect.isTrue
+         (isError <| run parseDigit invalidDigit)
+         "does not parse successfully"
+
       testList "foo bar parser" [
 
         testCase "parsing a string that is 'foo' or 'bar'" <| fun _ ->
@@ -79,7 +93,7 @@ let tests =
           let sampleAreaCode = "(412)"
 
           Expect.isTrue
-            (isSuccessful <| run parensPattern sampleAreaCode)
+            (isSuccessful <| runParserOnString parseAreaCode "" "" sampleAreaCode)
             "when given a 3 numbers in between parentheses"
 
         testCase "should fail" <| fun _ ->
@@ -92,21 +106,62 @@ let tests =
           ]
           
           Expect.isTrue
-            (badAreaCodes |> List.forall (isError << run parensPattern))
+            (badAreaCodes |> List.forall (isError << runParserOnString parseAreaCode "" ""))
             "when given a poorly formatted area code"
       ]
 
       testList "parsing the country code" [
-        testCase "should prase successfully" <| fun _ ->
-          let validCountryCodes = ["+1"; "+54"; "+313"]
+        testCase "should parse successfully" <| fun _ ->
+          let parsedCountryCodes = 
+            [
+              "+1", 1
+              "+54", 2
+              "+313", 3
+              "540", 3
+              "5", 1
+            ]
+            |> List.map (fun (countryCode, digits) -> runParserOnString (parseCountryCode digits) "" "" countryCode)
           
           Expect.isTrue
-            (validCountryCodes |> List.forall (isSuccessful << run countryCodePattern))
-            "when given codes with a plus an an integer after it"
+            (parsedCountryCodes |> List.forall isSuccessful)
+            "when given codes with an optional plus and a given specified number of digits after it"
+
+        testList "should not parse successfully" [
+          testCase "when given the wrong number of digits" <| fun _ ->
+            let badCountryCodes = 
+              [
+               "+1", 2
+               "23", 5
+               "+540", 10
+              ]
+              |> List.map (fun (countryCode, digits) -> runParserOnString (parseCountryCode digits) "" "" countryCode)
+
+            Expect.isTrue
+              (badCountryCodes |> List.forall isError)
+              "should fail to parse"
+
+          testCase "when given the '+' in the wrong position, but correct number of digits" <| fun _ ->
+            let badCountryCodes = 
+              [
+               "2+3", 2
+               "54+0", 3
+              ]
+              |> List.map (fun (countryCode, digits) -> runParserOnString (parseCountryCode digits) "" "" countryCode)
+
+            Expect.isTrue
+              (badCountryCodes |> List.forall isError)
+              "should fail to parse"
+        ]
+
+        testCase "parsing a full phone number" <| fun _ ->
+          let phoneNumber = "+1 (678) 234-5435"
+          let result = runParserOnString (parsePhoneNumber 1) "" "phone number parser" phoneNumber
+          
+          Expect.isTrue (isSuccessful result) "the phone number parses successfully"
       ]
     ]
   ]
 
 [<EntryPoint>]
 let main _ =
-  tests |> runTests { defaultConfig with ``parallel`` = true; verbosity=Logging.LogLevel.Verbose } 
+  tests |> runTests { defaultConfig with ``parallel``=true; verbosity=Logging.LogLevel.Verbose } 
