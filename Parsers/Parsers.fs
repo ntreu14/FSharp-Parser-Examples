@@ -53,7 +53,7 @@ module PhoneNumberParsers =
     let! _ = dashOrWhiteSpace
     let! lineNumber = parseLineNumber
     
-    return  {
+    return {
         CountryCode=perhapsCountryCode
         AreaCode=areaCode
         Prefix=prefix
