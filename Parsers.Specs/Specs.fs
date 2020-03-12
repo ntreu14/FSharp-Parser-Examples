@@ -156,11 +156,6 @@ let tests =
         testCase "parsing a full phone number" <| fun _ ->
           let rawPhoneNumber = "+1 (678) 234-5435"
           let result = runParserOnString (parsePhoneNumber 1) "" "phone number parser" rawPhoneNumber
-          
-          let phoneNumber =
-            match result with
-              | Success (parsedPhoneNumber, _, _) -> parsedPhoneNumber
-              | _ -> failtest "could not parse correctly."
 
           let expectedPhoneNumber = {
             CountryCode=Some 1
@@ -170,7 +165,7 @@ let tests =
           }
 
           Expect.isTrue (isSuccessful result) "is successful"
-          Expect.equal phoneNumber expectedPhoneNumber "parses to the expected phone number type"
+          Expect.isTrue (equalsExpectedResult expectedPhoneNumber result) "parses to the expected phone number type"
       ]
     ]
   ]

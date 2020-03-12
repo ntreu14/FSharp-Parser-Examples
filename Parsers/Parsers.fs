@@ -43,7 +43,6 @@ module PhoneNumberParsers =
   let dashOrWhiteSpace =
     optional (skipChar '-' <|> spaces1)
 
-  
   let parsePhoneNumber numCountryCodeDigits = parse {
     let! perhapsCountryCode = parseCountryCode numCountryCodeDigits 
     let! _ = dashOrWhiteSpace
