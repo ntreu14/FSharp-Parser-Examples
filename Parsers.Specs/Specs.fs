@@ -14,11 +14,6 @@ let equalsExpectedResult expected = function
   | Success (result, _, _) -> expected = result
   | _                      -> false
 
-let always a _ = a
-
-let testCases message cases test =
-  cases |> List.map (testCase message << (always test))
-
 let tests =
   testList "FParsec specs" [
     testList "simple parsers" [
