@@ -7,7 +7,8 @@ let isSuccessful = function
   | Success _ -> true
   | Failure _ -> false
 
-let isError = not << isSuccessful
+let isError parserResult =
+  not <| isSuccessful parserResult
 
 let equalsExpectedResult expected = function
   | Success (result, _, _) -> expected = result
