@@ -45,11 +45,11 @@ module PhoneNumberParsers =
 
   let parsePhoneNumber numCountryCodeDigits = parse {
     let! perhapsCountryCode = parseCountryCode numCountryCodeDigits 
-    let! _ = dashOrWhiteSpace
+    do! dashOrWhiteSpace
     let! areaCode = parseAreaCode
-    let! _ = dashOrWhiteSpace
+    do! dashOrWhiteSpace
     let! prefix = parsePrefix
-    let! _ = dashOrWhiteSpace
+    do! dashOrWhiteSpace
     let! lineNumber = parseLineNumber
     
     return {
